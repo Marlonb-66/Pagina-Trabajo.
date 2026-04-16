@@ -226,7 +226,6 @@
 
         footer { text-align: center; padding: 60px 20px; color: #a0aec0; border-top: 1px solid #edf2f7; }
 
-        /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             section { padding: 35px 25px; }
@@ -286,7 +285,7 @@
                 <div class="card" style="border-top: 5px solid var(--acento);">
                     <div class="icon-circle" style="color: var(--acento);">⚡</div>
                     <h3>Botón de Pánico</h3>
-                    <p>Acceso instantáneo a números de emergencia y técnicas para calmar tu mente en momentos de crisis aguda.</p>
+                    <p>Acceso instantáneo a técnicas de respiración rápida y ejercicios para calmar tu mente en momentos de crisis aguda.</p>
                     <button onclick="abrirModal()" class="btn-action" style="padding: 10px 20px; font-size: 0.8rem;">ACTIVAR AYUDA</button>
                 </div>
                 <div class="card">
@@ -340,7 +339,7 @@
     (function(){
     var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
     s1.async=true;
-    s1.src='https://embed.tawk.to/69e1613f5812741c365d5c0d/default';
+    s1.src='https://embed.tawk.to/69e16205a7ff261c327a9528/1jmc6dpjl';
     s1.charset='UTF-8';
     s1.setAttribute('crossorigin','*');
     s0.parentNode.insertBefore(s1,s0);
@@ -348,7 +347,6 @@
     </script>
 
     <script>
-        // Función de Inicio de Sesión
         function entrarWeb() {
             const aliasInput = document.getElementById('user-alias');
             const alias = aliasInput.value.trim();
@@ -360,7 +358,6 @@
                 alert("Por favor ingresa un nombre o alias para continuar.");
             }
         }
-        // Funciones del Modal
         function abrirModal() { document.getElementById('emergenciaModal').style.display = 'flex'; }
         function cerrarModal() { document.getElementById('emergenciaModal').style.display = 'none'; }
     </script>
