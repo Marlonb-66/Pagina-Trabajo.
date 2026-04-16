@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mente en Calma | Bienestar Estudiantil CETis 90</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primario: #5c9ce6;
+            --primario-suave: #ebf4ff;
+            --secundario: #fdf2f8;
+            --acento: #ec4899;
+            --texto-oscuro: #2d3748;
+            --texto-claro: #4a5568;
+            --blanco: #ffffff;
+            --fondo-gradiente: linear-gradient(135deg, #f8fbff 0%, #fdf2f8 100%);
+            --rojo-emergencia: #e53e3e;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--fondo-gradiente);
+            color: var(--texto-oscuro);
+            margin: 0;
+            line-height: 1.7;
+            scroll-behavior: smooth;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--primario);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--texto-claro);
+            margin-left: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .hero {
+            padding: 100px 5% 60px;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-badge {
+            background: var(--primario-suave);
+            color: var(--primario);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin: 0 0 20px;
+            line-height: 1.1;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        section {
+            background: var(--blanco);
+            padding: 50px;
+            border-radius: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 25px;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--acento);
+            margin-top: 10px;
+            border-radius: 2px;
+        }
+
+        .grid-servicios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: #fff;
+            padding: 35px;
+            border-radius: 25px;
+            border: 1px solid #edf2f7;
+            transition: all 0.4s ease;
+        }
+
+        .icon-circle {
+            width: 60px;
+            height: 60px;
+            background: var(--primario-suave);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 18px;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-action {
+            display: inline-block;
+            background: var(--acento);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .btn-action:hover {
+            transform: scale(1.05);
+            background: #db2777;
+        }
+
+        /* --- ESTILOS DEL PANEL DE EMERGENCIA (MODAL) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none; /* Oculto por defecto */
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 30px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--texto-claro);
+        }
+
+        .emergency-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 30px;
+        }
+
+        .emergency-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f7fafc;
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .emergency-item strong {
+            color: var(--rojo-emergencia);
+            font-size: 1.2rem;
+        }
+
+        .btn-call {
+            background: var(--rojo-emergencia);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .social-help {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-btn {
+            text-decoration: none;
+            font-size: 0.85rem;
+            color: var(--primario);
+            font-weight: 600;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: #718096;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            section { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#" class="nav-logo">Mente en Calma</a>
+        <div class="nav-links">
+            <a href="#quienes">Nosotros</a>
+            <a href="#herramientas">Herramientas</a>
+            <a href="#proposito">Propósito</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <span class="hero-badge">Iniciativa Estudiantil CETis 90</span>
+        <h1>Tu bienestar importa,<br><span style="color: var(--primario)">estamos contigo.</span></h1>
+        <p>Un espacio seguro diseñado para que los estudiantes encuentren el apoyo que necesitan en momentos de estrés.</p>
+    </header>
+
+    <div class="container">
+        
+        <section id="quienes">
+            <h2>¿Quiénes somos?</h2>
+            <p>En <strong>CETis 90</strong>, sabemos que la carga académica puede ser pesada. <strong>Mente en Calma</strong> nace como una respuesta para combatir el estrés y ofrecer acompañamiento emocional cuando más se necesita.</p>
+        </section>
+
+        <section id="herramientas">
+            <h2>Herramientas de Apoyo</h2>
+            <div class="grid-servicios">
+                <div class="card">
+                    <div class="icon-circle">🛡️</div>
+                    <h3>Buzón Anónimo</h3>
+                    <p>Desahógate sin miedo. Un espacio confidencial donde tu identidad está protegida al 100%.</p>
+                </div>
+
+                <div class="card" style="border-top: 5px solid var(--acento);">
+                    <div class="icon-circle" style="background: #fff5f7; color: var(--acento);">⚡</div>
+                    <h3>Botón de Pánico</h3>
+                    <p>Si sientes que la ansiedad te sobrepasa o estás en una crisis, presiona este botón para ver números de ayuda inmediata.</p>
+                    <button onclick="abrirPanel()" class="btn-action">¡NECESITO AYUDA AHORA!</button>
+                </div>
+
+                <div class="card">
+                    <div class="icon-circle">🤝</div>
+                    <h3>Red de Apoyo</h3>
+                    <p>Contactos directos de profesionales listos para escucharte dentro y fuera del plantel.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="miPanel" class="modal-overlay">
+        <div class="modal-content">
+            <span onclick="cerrarPanel()" class="close-modal">&times;</span>
+            <h2 style="color: var(--rojo-emergencia); font-size: 1.5rem;">Líneas de Ayuda Inmediata</h2>
+            <p>No estás solo. Si te encuentras en una emergencia, utiliza estos contactos:</p>
+            
+            <div class="emergency-list">
+                <div class="emergency-item">
+                    <span>Emergencias General</span>
+                    <strong>911</strong>
+                    <a href="tel:911" class="btn-call">Llamar</a>
+                </div>
+                <div class="emergency-item">
+                    <span>Línea de la Vida</span>
+                    <strong>800 911 2000</strong>
+                    <a href="tel:8009112000" class="btn-call">Llamar</a>
+                </div>
+            </div>
+
+            <p style="margin-top: 25px; font-weight: 600;">Redes sociales de apoyo:</p>
+            <div class="social-help">
+                <a href="https://www.facebook.com/LineaDeLaVidaMX" target="_blank" class="social-btn">Facebook Ayuda</a>
+                <a href="https://twitter.com/LineaDeLaVida" target="_blank" class="social-btn">Twitter (X)</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>Mente en Calma - CETis 90</strong></p>
+        <p>&copy; 2026 Proyecto Socioemocional | Acapulco, México.
+            Propietario - Marlon Bautista.
+        </p>
+    </footer>
+
+    <script>
+        function abrirPanel() {
+            document.getElementById("miPanel").style.display = "flex";
+        }
+
+        function cerrarPanel() {
+            document.getElementById("miPanel").style.display = "none";
+        }
+
+        // Cerrar si el usuario hace clic fuera de la cajita blanca
+        window.onclick = function(event) {
+            var modal = document.getElementById("miPanel");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+</body>
+</html>
