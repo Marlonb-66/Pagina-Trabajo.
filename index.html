@@ -64,10 +64,7 @@
             box-sizing: border-box;
         }
 
-        .input-anonimo:focus {
-            outline: none;
-            border-color: var(--primario);
-        }
+        .input-anonimo:focus { outline: none; border-color: var(--primario); }
 
         /* --- NAVEGACIÓN --- */
         nav {
@@ -145,28 +142,11 @@
             border: 1px solid rgba(0,0,0,0.02);
         }
 
-        h2 {
-            font-size: 2.2rem;
-            color: var(--texto-oscuro);
-            margin-bottom: 30px;
-        }
-
-        h2::after {
-            content: '';
-            display: block;
-            width: 70px;
-            height: 5px;
-            background: var(--acento);
-            margin-top: 15px;
-            border-radius: 10px;
-        }
+        h2 { font-size: 2.2rem; color: var(--texto-oscuro); margin-bottom: 30px; }
+        h2::after { content: ''; display: block; width: 70px; height: 5px; background: var(--acento); margin-top: 15px; border-radius: 10px; }
 
         /* --- QUIÉNES SOMOS --- */
-        .texto-largo p {
-            margin-bottom: 20px;
-            font-size: 1.05rem;
-            color: var(--texto-claro);
-        }
+        .texto-largo p { margin-bottom: 20px; font-size: 1.05rem; color: var(--texto-claro); }
 
         /* --- PILARES / CARDS --- */
         .grid-servicios {
@@ -193,80 +173,6 @@
             border-radius: 20px; font-size: 1.5rem; margin-bottom: 25px;
         }
 
-        /* --- BUZÓN DE CHAT --- */
-        .chat-window {
-            border: 1px solid #edf2f7;
-            border-radius: 25px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: 550px;
-            background: #ffffff;
-            margin-top: 30px;
-        }
-
-        .chat-header {
-            background: var(--primario);
-            color: white;
-            padding: 20px;
-            font-weight: 600;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 25px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            background-color: #f8fbff;
-            background-image: radial-gradient(#d1e3f8 0.5px, transparent 0.5px);
-            background-size: 20px 20px;
-        }
-
-        .msg {
-            max-width: 75%;
-            padding: 12px 18px;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            line-height: 1.4;
-        }
-
-        .msg-user {
-            align-self: flex-end;
-            background: var(--primario);
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-
-        .msg-admin {
-            align-self: flex-start;
-            background: white;
-            color: var(--texto-oscuro);
-            border: 1px solid #e2e8f0;
-            border-bottom-left-radius: 4px;
-        }
-
-        .chat-footer {
-            padding: 20px;
-            background: white;
-            border-top: 1px solid #eee;
-            display: flex;
-            gap: 12px;
-        }
-
-        .chat-footer input {
-            flex: 1;
-            border: 1px solid #e2e8f0;
-            padding: 12px 20px;
-            border-radius: 30px;
-            outline: none;
-            font-family: inherit;
-        }
-
         /* --- BOTONES --- */
         .btn-action {
             display: inline-block;
@@ -282,16 +188,6 @@
         }
 
         .btn-action:hover { background: #db2777; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(236, 72, 153, 0.2); }
-
-        .btn-send {
-            background: var(--primario);
-            color: white;
-            border: none;
-            padding: 0 25px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 600;
-        }
 
         /* --- PANEL EMERGENCIA MODAL --- */
         .modal-overlay {
@@ -328,12 +224,7 @@
 
         .emergency-box strong { font-size: 1.3rem; color: var(--rojo-emergencia); }
 
-        footer {
-            text-align: center;
-            padding: 60px 20px;
-            color: #a0aec0;
-            border-top: 1px solid #edf2f7;
-        }
+        footer { text-align: center; padding: 60px 20px; color: #a0aec0; border-top: 1px solid #edf2f7; }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
@@ -350,7 +241,7 @@
             <span style="font-size: 4rem;">👋</span>
             <h2>Bienvenido</h2>
             <p>Para garantizar tu <strong>anonimato total</strong>, ingresa un apodo o alias con el que te sientas cómodo.</p>
-            <input type="text" id="user-alias" class="input-anonimo" placeholder="Tu alias (Ej: UsuarioCalma22)">
+            <input type="text" id="user-alias" class="input-anonimo" placeholder="Tu alias (Ej: AlumnoCalma22)">
             <button class="btn-action" style="width: 100%;" onclick="entrarWeb()">Ingresar de forma segura</button>
         </div>
     </div>
@@ -360,17 +251,17 @@
         <div class="nav-links">
             <a href="#quienes">Nosotros</a>
             <a href="#herramientas">Herramientas</a>
-            <a href="#buzon">Buzón Chat</a>
+            <a href="#buzon-real">Buzón de Chat</a>
             <a href="#proposito">Propósito</a>
             <a href="javascript:void(0)" onclick="abrirModal()" style="color: var(--acento); font-weight: 700;">AYUDA URGENTE</a>
         </div>
     </nav>
 
     <header class="hero">
-        <div class="hero-badge">Proyecto de Trabajo Social | CETis 90</div>
+        <div class="hero-badge">Proyecto Socioemocional | CETis 90</div>
         <h1>Hola, <span id="display-alias" style="color: var(--primario);">Estudiante</span>.</h1>
-        <p>Tu salud mental es tan importante como tus calificaciones. Este es un espacio seguro para ser escuchado, sin juicios y con total respeto.</p>
-        <a href="#buzon" class="btn-action">Iniciar desahogo</a>
+        <p>Tu bienestar emocional es nuestra prioridad. Este es un espacio seguro para ser escuchado, sin juicios y con total respeto.</p>
+        <a href="javascript:void(0)" onclick="void(Tawk_API.toggle())" class="btn-action">Iniciar desahogo ahora</a>
     </header>
 
     <div class="container">
@@ -378,9 +269,9 @@
         <section id="quienes">
             <h2>¿Quiénes somos?</h2>
             <div class="texto-largo">
-                <p><strong>Mente en Calma</strong> es una plataforma integral de intervención socioemocional desarrollada por estudiantes del <strong>CETis 90</strong>, bajo la especialidad de <strong>Trabajo Social</strong>. Nuestra iniciativa surge de la necesidad de humanizar el entorno digital escolar y ofrecer un refugio para la salud mental.</p>
-                <p>Somos un equipo comprometido con la detección de riesgos emocionales. Entendemos que ser estudiante implica navegar por presiones constantes, desde el rendimiento académico hasta situaciones personales complejas fuera de la escuela. Nuestro rol es ser el puente que te conecta con la tranquilidad.</p>
-                <p>Trabajamos bajo los valores de <strong>empatía, confidencialidad y ética profesional</strong>, asegurando que cada palabra compartida aquí sea tratada con el mayor de los cuidados.</p>
+                <p><strong>Mente en Calma</strong> es una plataforma de intervención desarrollada por estudiantes de <strong>Trabajo Social</strong> del CETis 90. Nuestra iniciativa busca humanizar el entorno digital escolar y ofrecer un refugio para la salud mental.</p>
+                <p>Entendemos que ser estudiante implica navegar por presiones constantes, desde el rendimiento académico hasta situaciones personales complejas fuera de la escuela. Nuestro rol es ser el puente que te conecta con la tranquilidad.</p>
+                <p>Trabajamos bajo valores de <strong>empatía y confidencialidad</strong>, asegurando que cada palabra compartida aquí sea tratada con el mayor cuidado profesional.</p>
             </div>
         </section>
 
@@ -390,12 +281,12 @@
                 <div class="card">
                     <div class="icon-circle">🛡️</div>
                     <h3>Buzón Anónimo</h3>
-                    <p>Un chat directo donde puedes expresar tus sentimientos sin revelar quién eres. Seguridad total en tus palabras.</p>
+                    <p>Un canal de comunicación directo donde puedes expresar tus sentimientos sin revelar quién eres. Seguridad total en tus palabras.</p>
                 </div>
                 <div class="card" style="border-top: 5px solid var(--acento);">
                     <div class="icon-circle" style="color: var(--acento);">⚡</div>
                     <h3>Botón de Pánico</h3>
-                    <p>Acceso instantáneo a números de emergencia y técnicas de respiración para momentos de crisis aguda.</p>
+                    <p>Acceso instantáneo a números de emergencia y técnicas para calmar tu mente en momentos de crisis aguda.</p>
                     <button onclick="abrirModal()" class="btn-action" style="padding: 10px 20px; font-size: 0.8rem;">ACTIVAR AYUDA</button>
                 </div>
                 <div class="card">
@@ -406,31 +297,19 @@
             </div>
         </section>
 
-        <section id="buzon">
-            <h2>Buzón de Desahogo (Chat Anónimo)</h2>
-            <p>Este chat es monitoreado por nuestro equipo de apoyo. Puedes escribir cualquier situación escolar o personal. <strong>Tú eres anónimo, nosotros también.</strong></p>
-            
-            <div class="chat-window">
-                <div class="chat-header">
-                    <span>Chat de Orientación</span>
-                    <span style="font-size: 0.7rem; background: #c6f6d5; color: #22543d; padding: 4px 10px; border-radius: 20px;">Moderador Disponible</span>
-                </div>
-                <div class="chat-messages" id="chat-box">
-                    <div class="msg msg-admin">
-                        Bienvenido al buzón. Aquí puedes soltar lo que llevas dentro. ¿Cómo te sientes hoy?
-                    </div>
-                </div>
-                <div class="chat-footer">
-                    <input type="text" id="user-msg" placeholder="Escribe tu mensaje aquí..." onkeypress="handleKey(event)">
-                    <button class="btn-send" onclick="enviarMensaje()">Enviar</button>
-                </div>
+        <section id="buzon-real">
+            <h2>Buzón de Desahogo Profesional</h2>
+            <p>Para desahogarte de forma totalmente anónima y recibir respuesta de nuestro equipo, utiliza la burbuja de chat que aparece en la parte inferior derecha de tu pantalla.</p>
+            <p><strong>Recuerda:</strong> Este servicio es confidencial. Sirve para todo: problemas escolares o situaciones difíciles fuera de la escuela.</p>
+            <div style="text-align: center; margin-top: 30px;">
+                <button onclick="void(Tawk_API.toggle())" class="btn-action">ABRIR CHAT DE APOYO</button>
             </div>
         </section>
 
         <section id="proposito" style="background: var(--primario-suave); border: none;">
             <h2>Nuestro Propósito</h2>
             <p>El propósito de esta plataforma es servir como un recurso de primera respuesta para cualquier estudiante que necesite desahogarse o requiera ayuda. <strong>Sirve para todo:</strong> no importa si el problema es escolar o fuera de la escuela.</p>
-            <p>Buscamos transformar la cultura escolar del CETis 90, promoviendo la idea de que una mente en equilibrio es el cimiento de un gran futuro profesional y humano. Estamos aquí para asegurar que ningún problema sea cargado en soledad.</p>
+            <p>Buscamos promover la idea de que una mente en equilibrio es el cimiento de un gran futuro profesional y humano. Estamos aquí para asegurar que ningún problema sea cargado en soledad.</p>
         </section>
 
     </div>
@@ -439,8 +318,6 @@
         <div class="modal-content">
             <span onclick="cerrarModal()" style="position: absolute; right: 25px; top: 20px; cursor: pointer; font-size: 1.5rem;">&times;</span>
             <h2 style="color: var(--rojo-emergencia); font-size: 1.6rem;">Centro de Ayuda Directa</h2>
-            <p>Si sientes que estás en peligro o necesitas hablar con alguien YA mismo, usa estos medios:</p>
-            
             <div class="emergency-box">
                 <span>Emergencias Nacional</span>
                 <strong>911</strong>
@@ -448,12 +325,6 @@
             <div class="emergency-box">
                 <span>Línea de la Vida</span>
                 <strong>800 911 2000</strong>
-            </div>
-            
-            <p style="margin-top: 20px; font-weight: 600;">Redes de Apoyo 24/7:</p>
-            <div style="display: flex; justify-content: center; gap: 20px; margin-top: 10px;">
-                <a href="#" style="color: var(--primario); text-decoration: none; font-weight: 600;">Facebook Salud</a>
-                <a href="#" style="color: var(--primario); text-decoration: none; font-weight: 600;">Twitter Ayuda</a>
             </div>
             <button class="btn-action" style="margin-top: 30px; width: 100%;" onclick="cerrarModal()">Entendido</button>
         </div>
@@ -464,12 +335,23 @@
         <p>CETis 90 - Especialidad en Trabajo Social | Acapulco, Guerrero.</p>
     </footer>
 
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/69e1613f5812741c365d5c0d/default';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+
     <script>
         // Función de Inicio de Sesión
         function entrarWeb() {
             const aliasInput = document.getElementById('user-alias');
             const alias = aliasInput.value.trim();
-            
             if (alias !== "") {
                 document.getElementById('display-alias').innerText = alias;
                 document.getElementById('login-screen').style.display = 'none';
@@ -478,36 +360,6 @@
                 alert("Por favor ingresa un nombre o alias para continuar.");
             }
         }
-
-        // Función del Chat
-        function enviarMensaje() {
-            const input = document.getElementById('user-msg');
-            const chatBox = document.getElementById('chat-box');
-            
-            if (input.value.trim() !== "") {
-                // Mensaje del usuario
-                const userMsg = document.createElement('div');
-                userMsg.className = 'msg msg-user';
-                userMsg.innerText = input.value;
-                chatBox.appendChild(userMsg);
-                
-                const texto = input.value;
-                input.value = "";
-                chatBox.scrollTop = chatBox.scrollHeight;
-
-                // Simulación de respuesta profesional
-                setTimeout(() => {
-                    const adminMsg = document.createElement('div');
-                    adminMsg.className = 'msg msg-admin';
-                    adminMsg.innerText = "He recibido tu mensaje. Gracias por tener la valentía de compartirlo. En este buzón estamos para escucharte y orientarte de forma segura.";
-                    chatBox.appendChild(adminMsg);
-                    chatBox.scrollTop = chatBox.scrollHeight;
-                }, 1500);
-            }
-        }
-
-        function handleKey(e) { if(e.keyCode === 13) enviarMensaje(); }
-
         // Funciones del Modal
         function abrirModal() { document.getElementById('emergenciaModal').style.display = 'flex'; }
         function cerrarModal() { document.getElementById('emergenciaModal').style.display = 'none'; }
