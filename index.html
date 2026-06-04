@@ -28,6 +28,14 @@
             scroll-behavior: smooth;
         }
 
+        #progress-bar {
+            position: fixed;
+            top: 0; left: 0; height: 4px;
+            background: var(--acento);
+            width: 0%; z-index: 6000;
+            transition: width 0.1s ease-out;
+        }
+
         /* --- PANTALLA DE LOGIN ANÓNIMO --- */
         #login-screen {
             position: fixed;
@@ -145,10 +153,9 @@
         h2 { font-size: 2.2rem; color: var(--texto-oscuro); margin-bottom: 30px; }
         h2::after { content: ''; display: block; width: 70px; height: 5px; background: var(--acento); margin-top: 15px; border-radius: 10px; }
 
-        /* --- QUIÉNES SOMOS --- */
         .texto-largo p { margin-bottom: 20px; font-size: 1.05rem; color: var(--texto-claro); }
 
-        /* --- PILARES / CARDS --- */
+        /* --- CARDS SERVICIOS --- */
         .grid-servicios {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -161,10 +168,14 @@
             padding: 40px;
             border-radius: 30px;
             border: 1px solid #edf2f7;
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 30px rgba(0,0,0,0.05); }
+        .card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 25px 35px rgba(92, 156, 230, 0.08);
+            border-color: var(--primario-suave);
+        }
 
         .icon-circle {
             width: 60px; height: 60px;
@@ -173,7 +184,6 @@
             border-radius: 20px; font-size: 1.5rem; margin-bottom: 25px;
         }
 
-        /* --- BOTONES --- */
         .btn-action {
             display: inline-block;
             background: var(--acento);
@@ -189,12 +199,20 @@
 
         .btn-action:hover { background: #db2777; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(236, 72, 153, 0.2); }
 
-        /* --- PANEL EMERGENCIA MODAL --- */
+        /* --- PREGUNTAS FRECUENTES --- */
+        .faq-item { border-bottom: 1px solid #edf2f7; padding: 20px 0; cursor: pointer; }
+        .faq-question { display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 1.1rem; color: var(--texto-oscuro); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, margin-top 0.3s ease; color: var(--texto-claro); font-size: 0.95rem; }
+        .faq-item.active .faq-answer { max-height: 200px; margin-top: 15px; }
+        .faq-icon { transition: transform 0.3s; font-size: 1.2rem; color: var(--primario); }
+        .faq-item.active .faq-icon { transform: rotate(45deg); }
+
+        /* --- VENTANA MODAL (RESPIRACIÓN) --- */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -209,13 +227,14 @@
             width: 90%;
             text-align: center;
             position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
         }
 
         .emergency-box {
             background: #fff5f5;
-            padding: 20px;
+            padding: 15px 20px;
             border-radius: 20px;
-            margin: 15px 0;
+            margin: 10px 0;
             border: 1px solid #feb2b2;
             display: flex;
             justify-content: space-between;
@@ -224,7 +243,20 @@
 
         .emergency-box strong { font-size: 1.3rem; color: var(--rojo-emergencia); }
 
-        footer { text-align: center; padding: 60px 20px; color: #a0aec0; border-top: 1px solid #edf2f7; }
+        .circle-container { display: flex; justify-content: center; align-items: center; height: 180px; margin: 25px 0; }
+        .breathing-circle {
+            width: 100px; height: 100px;
+            background: rgba(92, 156, 230, 0.2);
+            border: 3px solid var(--primario);
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-weight: 600; color: var(--primario);
+            transition: all 4s ease-in-out;
+        }
+        .breathing-circle.inhale { width: 160px; height: 160px; background: rgba(236, 72, 153, 0.15); border-color: var(--acento); color: var(--acento); }
+        .breathing-circle.hold { background: rgba(92, 156, 230, 0.3); }
+
+        footer { text-align: center; padding: 50px 20px; color: #a0aec0; border-top: 1px solid #edf2f7; }
 
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
@@ -234,6 +266,8 @@
     </style>
 </head>
 <body>
+
+    <div id="progress-bar"></div>
 
     <div id="login-screen">
         <div class="login-card">
@@ -249,9 +283,10 @@
         <a href="#" class="nav-logo">Mente en Calma</a>
         <div class="nav-links">
             <a href="#quienes">Nosotros</a>
-            <a href="#herramientas">Herramientas</a>
+            <a href="herramientas.html">Herramientas</a> <!-- Enlace corregido según image_5d4c60.png -->
             <a href="#buzon-real">Buzón de Chat</a>
             <a href="#proposito">Propósito</a>
+            <a href="#preguntas">Preguntas Frecuentes</a>
             <a href="javascript:void(0)" onclick="abrirModal()" style="color: var(--acento); font-weight: 700;">AYUDA URGENTE</a>
         </div>
     </nav>
@@ -278,20 +313,22 @@
             <h2>¿Qué encontrarás aquí?</h2>
             <div class="grid-servicios">
                 <div class="card">
-                    <div class="icon-circle">🛡️</div>
-                    <h3>Buzón Anónimo</h3>
-                    <p>Un canal de comunicación directo donde puedes expresar tus sentimientos sin revelar quién eres. Seguridad total en tus palabras.</p>
+                    <div class="icon-circle">📊</div>
+                    <h3>Centro de Valoración</h3>
+                    <p>Accede de forma directa a un test interactivo estructurado metodológicamente para evaluar cargas de estrés académico y social.</p>
+                    <a href="herramientas.html#test" class="btn-action" style="padding: 10px 20px; font-size: 0.8rem; background: var(--primario);">Ir al Test</a>
                 </div>
                 <div class="card" style="border-top: 5px solid var(--acento);">
                     <div class="icon-circle" style="color: var(--acento);">⚡</div>
-                    <h3>Botón de Pánico</h3>
-                    <p>Acceso instantáneo a técnicas de respiración rápida y ejercicios para calmar tu mente en momentos de crisis aguda.</p>
-                    <button onclick="abrirModal()" class="btn-action" style="padding: 10px 20px; font-size: 0.8rem;">ACTIVAR AYUDA</button>
+                    <h3>Técnicas de Contención</h3>
+                    <p>Ejercicios visuales y de enraizamiento diseñados para estabilizar el sistema nervioso ante crisis de ansiedad repentinas.</p>
+                    <a href="herramientas.html#ejercicios" class="btn-action" style="padding: 10px 20px; font-size: 0.8rem;">Ver Ejercicios</a>
                 </div>
                 <div class="card">
-                    <div class="icon-circle">🤝</div>
-                    <h3>Red de Apoyo</h3>
-                    <p>Te vinculamos con profesionales de la salud y organizaciones de apoyo emocional dentro y fuera del plantel.</p>
+                    <div class="icon-circle">📅</div>
+                    <h3>Organización Eficiente</h3>
+                    <p>Aprende a estructurar tus rutinas diarias con nuestro planificador de bloques lógicos para disminuir la procrastinación.</p>
+                    <a href="herramientas.html#agenda" class="btn-action" style="padding: 10px 20px; font-size: 0.8rem; background: var(--primario);">Ver Planificador</a>
                 </div>
             </div>
         </section>
@@ -311,21 +348,64 @@
             <p>Buscamos promover la idea de que una mente en equilibrio es el cimiento de un gran futuro profesional y humano. Estamos aquí para asegurar que ningún problema sea cargado en soledad.</p>
         </section>
 
+        <section id="preguntas">
+            <h2>Preguntas Frecuentes</h2>
+            <p style="color: var(--texto-claro); margin-bottom: 30px;">Todo lo que necesitas saber sobre el uso y la seguridad de la plataforma.</p>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>¿El chat es completamente anónimo?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Sí. No solicitamos correos institucionales, nombres reales ni matrículas. El alias que ingresas al inicio es únicamente para dirigirnos a ti de forma respetuosa durante la sesión de desahogo.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>¿Quiénes leen los mensajes del buzón?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Los mensajes son recibidos y atendidos exclusivamente por el equipo capacitado de Trabajo Social del plantel, bajo estrictos estándares de confidencialidad y ética profesional.
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>¿Tiene algún costo utilizar la plataforma?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    Ninguno. Es una herramienta 100% gratuita creada por y para la comunidad estudiantil del CETis 90 como apoyo al bienestar socioemocional.
+                </div>
+            </div>
+        </section>
+
     </div>
 
+    <!-- MODAL INTEGRADO -->
     <div id="emergenciaModal" class="modal-overlay">
         <div class="modal-content">
-            <span onclick="cerrarModal()" style="position: absolute; right: 25px; top: 20px; cursor: pointer; font-size: 1.5rem;">&times;</span>
-            <h2 style="color: var(--rojo-emergencia); font-size: 1.6rem;">Centro de Ayuda Directa</h2>
+            <span onclick="cerrarModal()" style="position: absolute; right: 25px; top: 20px; cursor: pointer; font-size: 1.5rem; font-weight: bold;">&times;</span>
+            <h2 style="color: var(--texto-oscuro); font-size: 1.6rem; margin-bottom: 5px;">Sintoniza tu respiración</h2>
+            <p style="color: var(--texto-claro); font-size: 0.9rem; margin: 0;">Tómate un momento para calmar la mente antes de continuar.</p>
+            
+            <div class="circle-container">
+                <div id="breathCircle" class="breathing-circle">Inicia</div>
+            </div>
+
+            <h3 style="color: var(--rojo-emergencia); font-size: 1.1rem; margin-top: 20px;">Líneas de Ayuda Externa Directa:</h3>
             <div class="emergency-box">
                 <span>Emergencias Nacional</span>
                 <strong>911</strong>
             </div>
             <div class="emergency-box">
-                <span>Línea de la Vida</span>
+                <span>Línea de la Vida (24 hrs)</span>
                 <strong>800 911 2000</strong>
             </div>
-            <button class="btn-action" style="margin-top: 30px; width: 100%;" onclick="cerrarModal()">Entendido</button>
+            <button class="btn-action" style="margin-top: 20px; width: 100%; background: var(--texto-oscuro);" onclick="cerrarModal()">Cerrar Ventana</button>
         </div>
     </div>
 
@@ -347,6 +427,8 @@
     </script>
 
     <script>
+        let breathInterval;
+
         function entrarWeb() {
             const aliasInput = document.getElementById('user-alias');
             const alias = aliasInput.value.trim();
@@ -358,9 +440,46 @@
                 alert("Por favor ingresa un nombre o alias para continuar.");
             }
         }
-        function abrirModal() { document.getElementById('emergenciaModal').style.display = 'flex'; }
-        function cerrarModal() { document.getElementById('emergenciaModal').style.display = 'none'; }
-    </script>
 
+        function abrirModal() { 
+            document.getElementById('emergenciaModal').style.display = 'flex'; 
+            startBreathingExercise();
+        }
+        
+        function cerrarModal() { 
+            document.getElementById('emergenciaModal').style.display = 'none'; 
+            clearInterval(breathInterval);
+            const circle = document.getElementById('breathCircle');
+            circle.className = "breathing-circle";
+            circle.innerText = "Inicia";
+        }
+
+        function startBreathingExercise() {
+            const circle = document.getElementById('breathCircle');
+            function runCycle() {
+                circle.innerHTML = "Inhala...";
+                circle.className = "breathing-circle inhale";
+                setTimeout(() => {
+                    circle.innerHTML = "Mantén...";
+                    circle.className = "breathing-circle inhale hold";
+                    setTimeout(() => {
+                        circle.innerHTML = "Exhala...";
+                        circle.className = "breathing-circle";
+                    }, 4000);
+                }, 4000);
+            }
+            runCycle();
+            breathInterval = setInterval(runCycle, 12000);
+        }
+
+        function toggleFaq(element) { element.classList.toggle('active'); }
+
+        window.onscroll = function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+    </script>
 </body>
 </html>
