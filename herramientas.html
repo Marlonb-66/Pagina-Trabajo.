@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mente en Calma | Centro Avanzado de Herramientas y Diagnóstico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primario: #5c9ce6;
+            --primario-suave: #ebf4ff;
+            --secundario: #fdf2f8;
+            --acento: #ec4899;
+            --texto-oscuro: #2d3748;
+            --texto-claro: #4a5568;
+            --blanco: #ffffff;
+            --fondo-gradiente: linear-gradient(135deg, #f8fbff 0%, #fdf2f8 100%);
+            --rojo-emergencia: #e53e3e;
+            --sombra: 0 10px 40px rgba(0,0,0,0.03);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--fondo-gradiente);
+            color: var(--texto-oscuro);
+            margin: 0;
+            line-height: 1.7;
+            scroll-behavior: smooth;
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0; left: 0; height: 4px;
+            background: var(--acento);
+            width: 0%; z-index: 6000;
+            transition: width 0.1s ease-out;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-logo { font-weight: 700; font-size: 1.5rem; color: var(--primario); text-decoration: none; }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--texto-claro);
+            margin-left: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--acento); }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px 80px;
+        }
+
+        section {
+            background: var(--blanco);
+            padding: 50px;
+            border-radius: 35px;
+            margin-bottom: 50px;
+            box-shadow: var(--sombra);
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        h1 { font-size: 2.8rem; text-align: center; margin-bottom: 10px; color: #1a202c; }
+        .subtitle { text-align: center; color: var(--texto-claro); font-size: 1.1rem; margin-bottom: 50px; }
+
+        h2 { font-size: 1.8rem; color: var(--texto-oscuro); margin-bottom: 25px; }
+        h2::after { content: ''; display: block; width: 50px; height: 5px; background: var(--primario); margin-top: 10px; border-radius: 10px; }
+
+        /* --- TEST EXTENDIDO --- */
+        .dimension-title {
+            font-size: 1.1rem;
+            color: var(--primario);
+            font-weight: 700;
+            margin-top: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .test-question { margin-bottom: 25px; padding-bottom: 15px; }
+        .test-question p { font-weight: 600; margin-bottom: 12px; font-size: 1.05rem; color: #2d3748; }
+        .options-group { display: flex; flex-direction: column; gap: 8px; }
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            background: #f7fafc;
+            border: 2px solid #edf2f7;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+        .option-label:hover { background: var(--primario-suave); border-color: var(--primario); }
+        .option-label input { margin-right: 15px; transform: scale(1.2); }
+
+        .btn-action {
+            display: inline-block;
+            background: var(--acento);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            font-size: 1rem;
+        }
+        .btn-action:hover { background: #db2777; transform: translateY(-2px); }
+
+        #result-box { display: none; margin-top: 30px; padding: 30px; border-radius: 25px; text-align: center; animation: fadeIn 0.5s ease; }
+        .result-bajo { background: #f0fff4; border: 2px solid #c6f6d5; color: #22543d; }
+        .result-medio { background: #fffaf0; border: 2px solid #feebc8; color: #744210; }
+        .result-alto { background: #fff5f5; border: 2px solid #feb2b2; color: #742a2a; }
+
+        /* --- ENRAIZAMIENTO --- */
+        .grounding-box { background: #f7fafc; border-left: 5px solid var(--acento); padding: 25px; border-radius: 0 20px 20px 0; margin-bottom: 25px; }
+        .grounding-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
+        .step-card { background: white; padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #edf2f7; }
+        .step-card span { font-size: 1.8rem; display: block; margin-bottom: 5px; }
+        .step-card strong { color: var(--acento); display: block; }
+
+        /* --- PLANIFICADOR --- */
+        .timetable { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9rem; }
+        .timetable th, .timetable td { border: 1px solid #edf2f7; padding: 12px; text-align: center; }
+        .timetable th { background: var(--primario-suave); color: var(--texto-oscuro); font-weight: 600; }
+        .tag-priority { background: #fed7d7; color: #9b2c2c; padding: 2px 8px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+        .tag-recess { background: #feebc8; color: #c05621; padding: 2px 8px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+        .tag-study { background: #e2e8f0; color: #4a5568; padding: 2px 8px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; }
+
+        /* --- BIBLIOTECA --- */
+        .grid-recursos { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .recurso-card { background: #f7fafc; padding: 30px; border-radius: 25px; border: 1px solid #edf2f7; }
+        .recurso-card h3 { margin-top: 0; color: var(--primario); font-size: 1.2rem; }
+        .recurso-card ul { padding-left: 20px; margin: 0; font-size: 0.95rem; color: var(--texto-claro); }
+        .recurso-card li { margin-bottom: 8px; }
+
+        footer { text-align: center; padding: 50px 20px; color: #a0aec0; border-top: 1px solid #edf2f7; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div id="progress-bar"></div>
+
+    <nav>
+        <a href="index.html" class="nav-logo">Mente en Calma</a>
+        <div class="nav-links">
+            <a href="index.html">Inicio</a>
+            <a href="#test">Autoevaluación</a>
+            <a href="#ejercicios">Técnicas de Ansiedad</a>
+            <a href="#agenda">Gestión del Tiempo</a>
+            <a href="#recursos">Biblioteca</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Centro de Soporte Especializado</h1>
+        <p class="subtitle">Herramientas psicométricas preliminares, dinámicas de afrontamiento y contención del estrés estudiantil.</p>
+
+        <!-- TEST DE AUTOEVALUACIÓN EXTENDIDO -->
+        <section id="test">
+            <h2>Escala Breve de Valoración del Estrés Estudiantil</h2>
+            <p style="color: var(--texto-claro); margin-bottom: 20px;">Esta herramienta evalúa indicadores multidimensionales de tu estado socioemocional actual en el entorno académico.</p>
+            
+            <form id="quizForm">
+                <div class="dimension-title">Dimensión I: Carga e Impacto Académico</div>
+                <div class="test-question">
+                    <p>1. ¿Con qué frecuencia sientes cansancio extremo o falta de energía para realizar tus tareas escolares?</p>
+                    <div class="options-group">
+                        <label class="option-label"><input type="radio" name="q1" value="0" required> Casi nunca o nunca</label>
+                        <label class="option-label"><input type="radio" name="q1" value="1"> Algunas veces en la semana</label>
+                        <label class="option-label"><input type="radio" name="q1" value="2"> Todos los días o casi todos los días</label>
+                    </div>
+                </div>
+                <div class="test-question">
+                    <p>2. ¿Experimentas bloqueos mentales o dificultades de concentración severas al presentar exámenes o entregar proyectos?</p>
+                    <div class="options-group">
+                        <label class="option-label"><input type="radio" name="q2" value="0" required> No, logro controlarlo adecuadamente</label>
+                        <label class="option-label"><input type="radio" name="q2" value="1"> Ocasionalmente pierdo el enfoque por nervios</label>
+                        <label class="option-label"><input type="radio" name="q2" value="2"> Sí, me cuesta recordar lo estudiado debido a la presión</label>
+                    </div>
+                </div>
+
+                <div class="dimension-title">Dimensión II: Manifestaciones Emocionales y Físicas</div>
+                <div class="test-question">
+                    <p>3. ¿Has notado alteraciones físicas debido a la preocupación (dolores de cabeza, tensión en el cuello o acidez estomacal)?</p>
+                    <div class="options-group">
+                        <label class="option-label"><input type="radio" name="q3" value="0" required> Rara vez o ninguna</label>
+                        <label class="option-label"><input type="radio" name="q3" value="1"> Sí, coincidiendo con semanas de alta carga escolar</label>
+                        <label class="option-label"><input type="radio" name="q3" value="2"> Es un malestar persistente durante todo el ciclo</label>
+                    </div>
+                </div>
+                <div class="test-question">
+                    <p>4. ¿Sientes irritabilidad, ganas de llorar o desesperación sin un motivo aparente durante el día escolar?</p>
+                    <div class="options-group">
+                        <label class="option-label"><input type="radio" name="q4" value="0" required> No, mantengo estabilidad emocional</label>
+                        <label class="option-label"><input type="radio" name="q4" value="1"> A veces me sobrepasan mis emociones momentáneamente</label>
+                        <label class="option-label"><input type="radio" name="q4" value="2"> Sí, es una sensación constante que me desgasta</label>
+                    </div>
+                </div>
+
+                <div class="dimension-title">Dimensión III: Entorno Social y Relacional</div>
+                <div class="test-question">
+                    <p>5. ¿Sientes que tus responsabilidades o problemas familiares/personales absorben la energía necesaria para tu desempeño escolar?</p>
+                    <div class="options-group">
+                        <label class="option-label"><input type="radio" name="q5" value="0" required> No, logro separar ambos entornos</label>
+                        <label class="option-label"><input type="radio" name="q5" value="1"> Eventualmente los problemas externos afectan mi atención</label>
+                        <label class="option-label"><input type="radio" name="q5" value="2"> Totalmente, el entorno externo me abruma de forma directa</label>
+                    </div>
+                </div>
+                <div class="test-question">
+                    <p>6. ¿Te has aislado de tus compañeros o amigos debido a que te sientes saturado o sin ánimos de socializar?</p>
+                    <div class="options-group">
+                        <label class="option-label"><input type="radio" name="q6" value="0" required> No, mantengo mi comunicación habitual</label>
+                        <label class="option-label"><input type="radio" name="q6" value="1"> En ocasiones prefiero no interactuar por cansancio</label>
+                        <label class="option-label"><input type="radio" name="q6" value="2"> Sí, he tendido a alejarme de todos últimamente</label>
+                    </div>
+                </div>
+
+                <button type="button" class="btn-action" style="margin-top: 20px;" onclick="calcularResultado()">Procesar Diagnóstico de Carga Inicial</button>
+            </form>
+
+            <div id="result-box">
+                <h3 id="result-title" style="margin-top: 0; font-size: 1.4rem;"></h3>
+                <p id="result-text" style="margin-bottom: 0; font-size: 1.05rem;"></p>
+            </div>
+        </section>
+
+        <!-- TÉCNICAS INTERACTIVAS -->
+        <section id="ejercicios">
+            <h2>Ejercicios de Contención Inmediata</h2>
+            <p style="color: var(--texto-claro); margin-bottom: 30px;">Si notas que tu mente va muy rápido o experimentas taquicardia por estrés, aplica estas estrategias psicoterapéuticas validadas:</p>
+            
+            <div class="grounding-box">
+                <h3 style="margin-top: 0; color: var(--texto-oscuro);">Técnica de Enraizamiento 5-4-3-2-1</h3>
+                <p style="font-size: 0.95rem; color: var(--texto-claro);">Sirve para regresar tu mente al momento presente cuando sientas un ataque de pánico o desconexión emocional. Observa a tu alrededor y localiza de forma consciente:</p>
+                <div class="grounding-steps">
+                    <div class="step-card"><span>👁️</span><strong>5 Cosas</strong> que puedas ver</div>
+                    <div class="step-card"><span>🖐️</span><strong>4 Cosas</strong> que puedas tocar</div>
+                    <div class="step-card"><span>👂</span><strong>3 Sonidos</strong> que puedas oír</div>
+                    <div class="step-card"><span>👃</span><strong>2 Olores</strong> que reconozcas</div>
+                    <div class="step-card"><span>👅</span><strong>1 Sabor</strong> en tu boca</div>
+                </div>
+            </div>
+
+            <div style="background: var(--primario-suave); padding: 25px; border-radius: 20px;">
+                <h3 style="margin-top: 0; color: var(--texto-oscuro); font-size: 1.2rem;">Estrategia: Escritura Catártica (Vaciado de Mente)</h3>
+                <p style="font-size: 0.95rem; color: var(--texto-claro); margin-bottom: 15px;">Cuando acumules pensamientos negativos o frustración, abre una libreta u hoja en blanco y escribe sin parar durante 5 minutos todo lo que sientas, sin cuidar la ortografía o la redacción. Una vez terminado, rompe o borra el texto de forma simbólica. Esto le indica a tu sistema nervioso que la tensión ha sido expulsada de tu cuerpo.</p>
+            </div>
+        </section>
+
+        <!-- ORGANIZADOR DE TIEMPO -->
+        <section id="agenda">
+            <h2>Estructura de Organización del Tiempo Eficiente</h2>
+            <p style="color: var(--texto-claro);">Un pilar fundamental del bienestar es evitar la procrastinación que detona ansiedad de último momento. Te mostramos el modelo de distribución ideal:</p>
+            
+            <table class="timetable">
+                <thead>
+                    <tr>
+                        <th>Bloque de Tiempo</th>
+                        <th>Actividad Clave Sugerida</th>
+                        <th>Enfoque de Salud Mental</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>07:00 AM - 02:00 PM</strong></td>
+                        <td>Jornada Escolar Activa</td>
+                        <td><span class="tag-study">Atención Focalizada</span> Evitar distracciones en el aula para no acumular trabajo en casa.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>02:00 PM - 04:00 PM</strong></td>
+                        <td>Traslado, Comida y Desconexión</td>
+                        <td><span class="tag-recess">Descanso Mental</span> Cero pantallas o tareas. Tiempo para nutrirse y reposar.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>04:00 PM - 06:30 PM</strong></td>
+                        <td>Estudio Autónomo y Pendientes</td>
+                        <td><span class="tag-priority">Bloque de Alta Prioridad</span> Aplicar la Técnica Pomodoro (estudio con pausas cortas).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>06:30 PM - 08:30 PM</strong></td>
+                        <td>Actividad Recreativa o Deportiva</td>
+                        <td><span class="tag-recess">Liberación de Endorfinas</span> Ejercicio, videojuegos, pasatiempos o convivencia.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>08:30 PM en adelante</strong></td>
+                        <td>Cena Ligera e Higiene del Sueño</td>
+                        <td><span class="tag-priority">Preparación al Reposo</span> Cierre de tareas, luces bajas para asegurar el descanso real.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- BIBLIOTECA -->
+        <section id="recursos">
+            <h2>Biblioteca de Hábitos Saludables</h2>
+            <p style="color: var(--texto-claro); margin-bottom: 30px;">Estrategias adicionales recopiladas para complementar tu desarrollo integral:</p>
+            
+            <div class="grid-recursos">
+                <div class="recurso-card">
+                    <h3>📊 Alivio ante Exámenes</h3>
+                    <ul>
+                        <li>Repasa apuntes clave en bloques de 20 minutos un día antes; nunca pases la noche en vela memorizando.</li>
+                        <li>Realiza mapas conceptuales visuales para estructurar los temas difíciles rápidamente.</li>
+                    </ul>
+                </div>
+                <div class="recurso-card">
+                    <h3>🌙 Manejo del Sueño</h3>
+                    <ul>
+                        <li>Alinea tus horas de sueño. Dormir menos de 6 horas reduce tu retención de memoria hasta un 40%.</li>
+                        <li>Mantén el espacio de estudio separado del de dormir para evitar el insomnio condicionado.</li>
+                    </ul>
+                </div>
+                <div class="recurso-card">
+                    <h3>🗣️ Límites Asertivos</h3>
+                    <ul>
+                        <li>Aprende a negociar los roles de trabajo en equipo equitativamente para balancear las cargas.</li>
+                        <li>Comunica a tus profesores de confianza si atraviesas una situación de crisis familiar justificada.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p><strong>Mente en Calma &copy; 2026</strong></p>
+        <p>CETis 90 - Especialidad en Trabajo Social | Acapulco, Guerrero.</p>
+    </footer>
+
+    <script>
+        function calcularResultado() {
+            const form = document.getElementById('quizForm');
+            for (let i = 1; i <= 6; i++) {
+                if (!form.elements['q' + i].value) {
+                    alert("Por favor, responde a todas las preguntas de las dimensiones antes de enviar.");
+                    return;
+                }
+            }
+
+            const q1 = parseInt(form.elements['q1'].value);
+            const q2 = parseInt(form.elements['q2'].value);
+            const q3 = parseInt(form.elements['q3'].value);
+            const q4 = parseInt(form.elements['q4'].value);
+            const q5 = parseInt(form.elements['q5'].value);
+            const q6 = parseInt(form.elements['q6'].value);
+
+            const total = q1 + q2 + q3 + q4 + q5 + q6;
+            const resBox = document.getElementById('result-box');
+            const resTitle = document.getElementById('result-title');
+            const resText = document.getElementById('result-text');
+
+            resBox.style.display = "block";
+
+            if (total <= 4) {
+                resBox.className = "result-bajo";
+                resTitle.innerText = "Nivel de Carga: Funcional / Adaptativo (Bajo)";
+                resText.innerText = "Tus indicadores muestran un manejo adecuado de las demandas del entorno escolar. Mantienes un balance saludable. Te sugerimos revisar la sección de Gestión del Tiempo abajo para optimizar tus rutinas.";
+            } else if (total <= 8) {
+                resBox.className = "result-medio";
+                resTitle.innerText = "Nivel de Carga: Sobrecarga Moderada";
+                resText.innerText = "Se observan focos de alerta en tu bienestar emocional o físico. La acumulación de pendientes o factores externos está afectando tu tranquilidad. Te aconsejamos usar de manera preventiva el Chat de la página de inicio para canalizar este estrés.";
+            } else {
+                resBox.className = "result-alto";
+                resTitle.innerText = "Nivel de Carga: Saturación Crónica (Alto)";
+                resText.innerText = "Presentas niveles elevados de tensión que comprometen tu rendimiento y estabilidad. Es de suma importancia que no sobrelleves esto a solas. Te recomendamos acudir directamente al departamento de orientación/Trabajo Social de la escuela o activar las líneas del botón de pánico urgentes.";
+            }
+            resBox.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        window.onscroll = function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+    </script>
+</body>
+</html>
